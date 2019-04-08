@@ -1,29 +1,47 @@
 package gmail.antonsmirnov3006.selenium;
 
-import gmail.antonsmirnov3006.selenium.application.Application;
+import org.assertj.core.api.JUnitSoftAssertions;
 import org.junit.After;
 import org.junit.Before;
-
-import java.net.MalformedURLException;
+import org.junit.Rule;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseRunner {
 
-    public static ThreadLocal<Application> tlApp = new ThreadLocal<>();
-    public Application app;
+    protected static WebDriver driver;
+    protected WebDriverWait wait;
+
+    @Rule
+    public JUnitSoftAssertions softly = new JUnitSoftAssertions();
 
     @Before
-    public void start() throws MalformedURLException {
-        if (tlApp.get() != null) {
-            app = tlApp.get();
-            return;
+    public void setUp() {
+        driver = createDriver();
+        wait = new WebDriverWait(driver, 10);
+    }
+
+    private WebDriver createDriver() {
+        return BrowsersFactory.buildDriver("chrome");
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(WebDriver driver) {
+        BaseRunner.driver = driver;
+    }
+
+    public static WebDriver getInstance() {
+        if (driver == null) {
+            driver = BrowsersFactory.buildDriver("chrome");
         }
-        app = new Application();
-        tlApp.set(app);
+        return driver;
     }
 
     @After
     public void tearDown() {
-        app.quit();
+        driver.quit();
     }
-
 }

@@ -1,17 +1,10 @@
 package gmail.antonsmirnov3006.selenium.widget;
 
-import gmail.antonsmirnov3006.selenium.BaseRunner;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
-public class TextInput extends BaseRunner {
+public interface TextInput extends BaseElement {
+    void type(String text);
 
-    public void inputText(String elementPath, String text) {
-        app.findElement(By.xpath(elementPath)).click();
-        app.findElement(By.xpath(elementPath)).sendKeys(text, Keys.ENTER);
-    }
+    void clear();
 
-    public String getValue(String elementPath) {
-        return app.findElement(By.xpath(elementPath)).getText();
-    }
+    void clearAndType(String text);
 }

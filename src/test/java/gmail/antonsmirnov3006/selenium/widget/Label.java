@@ -1,8 +1,6 @@
 package gmail.antonsmirnov3006.selenium.widget;
 
-public interface Button extends BaseElement {
+public interface Label extends BaseElement {
 
   String getText();
-
-  boolean isClickable();
 }
